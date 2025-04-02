@@ -1,0 +1,174 @@
+# Reglas de Spectral
+
+## Formatos soportados
+- oas2
+- oas3
+- oas3.0
+- oas3.1
+
+## Aliases
+### openapi-swagger
+- Formatos: oas3, oas2
+- Dado: `$.openapi`, `$.swagger`
+
+### put-post
+- Formatos: oas3
+- Dado: `$.paths.*.post`, `$.paths.*.put`
+
+### example-values
+- Formatos: oas3
+- Dado: `$.components.schemas.*`, `$..properties..properties.*`
+
+### schema-schemas
+- Formatos: oas3
+- Dado: `$..requestBody..schema`, `$.components.schemas.*`
+
+### properties-string
+- Formatos: oas3
+- Dado: `$.components.schemas.*[?(@.properties.*.type=="string")]`
+
+### test-pathg
+- Formatos: oas3
+- Dado: `$.paths..get.responses[?(@.status >= 200 && @.status < 300)]`
+
+### properties
+- Formatos: oas3
+- Dado: `$..properties.*`
+
+### example
+- Formatos: oas3
+- Dado: `$.components.schemas.*.properties[?(@.type!='array')]`, `$.components.schemas.*.properties[?(@.type=='array')].items.*`
+
+### All_Array_Item
+- Formatos: oas2, oas3, oas3.0
+- Dado: `$..[?(@ && @.type=='array')]`, `$..[?(@ && @.type && @.type.constructor.name === 'Array' && @.type.includes('array'))]`
+
+### All_Enum_Object
+- Formatos: oas2, oas3
+- Dado: `$..[?(@ && @.enum)]`
+
+### All_Enum_Value
+- Formatos: oas2, oas3
+- Dado: `$..[?(@ && @.enum)].enum[*]`
+
+### All_Example
+- Formatos: oas2, oas3
+- Dado: `$..examples[*]`, `$.components.examples[*]`, `$.paths[*][*]..content[*].examples[*]`, `$.paths[*][*]..parameters[*].examples[*]`, `$.components.parameters[*].examples[*]`, `$.paths[*][*]..headers[*].examples[*]`, `$.components.headers[*].examples[*]`
+
+### All_Example_Media
+- Formatos: oas2, oas3
+- Dado: `$..responses..[?(@ && @.schema && @.examples)]`, `$..content..[?(@ && @.schema && (@.example !== void 0 || @.examples))]`, `$..headers..[?(@ && @.schema && (@.example !== void 0 || @.examples))]`, `$..parameters..[?(@ && @.schema && (@.example !== void 0 || @.examples))]`
+
+### All_Example_Schema
+- Formatos: oas2, oas3
+- Dado: `$..definitions..[?(@property !== 'properties' && @ && (@.example !== void 0 || @['x-example'] !== void 0 || @.default !== void 0) && (@.enum || @.type || @.format || @.$ref || @.properties || @.items))]`, `$..parameters..[?(@property !== 'properties' && @ && (@.example !== void 0 || @['x-example'] !== void 0 || @.default !== void 0) && (@.enum || @.type || @.format || @.$ref || @.properties || @.items))]`, `$..responses..[?(@property !== 'properties' && @ && (@.example !== void 0 || @['x-example'] !== void 0 || @.default !== void 0) && (@.enum || @.type || @.format || @.$ref || @.properties || @.items))]`, `$.components.schemas..[?(@property !== 'properties' && @ && (@ && @.example !== void 0 || @.default !== void 0) && (@.enum || @.type || @.format || @.$ref || @.properties || @.items))]`, `$..content..[?(@property !== 'properties' && @ && (@ && @.example !== void 0 || @.default !== void 0) && (@.enum || @.type || @.format || @.$ref || @.properties || @.items))]`, `$..headers..[?(@property !== 'properties' && @ && (@ && @.example !== void 0 || @.default !== void 0) && (@.enum || @.type || @.format || @.$ref || @.properties || @.items))]`, `$..parameters..[?(@property !== 'properties' && @ && (@ && @.example !== void 0 || @.default !== void 0) && (@.enum || @.type || @.format || @.$ref || @.properties || @.items))]`
+
+### All_Markdown
+- Formatos: oas2, oas3
+- Dado: `$..[description,title]`
+
+### All_Ref
+- Formatos: oas2, oas3
+- Dado: `$..[?(@property === '$ref')]`
+
+### All_Servers
+- Formatos: oas3, oas2
+- Dado: `$.servers[*]`, `#Path_Item.servers[*]`, `#Operation_Object.servers[*]`, `#Link_Object.server`, `$.host`
+
+### API_Contact
+- Formatos: oas2, oas3
+- Dado: `$.info.contact`
+
+### API_Description
+- Formatos: oas2, oas3
+- Dado: `$.info.description`
+
+### API_Document
+- Formatos: oas2, oas3
+- Dado: `$`
+
+### API_Document_RecursiveSearch
+- Formatos: oas2, oas3
+- Dado: `$..`
+
+### API_License
+- Formatos: oas2, oas3
+- Dado: `$.info.license`
+
+### API_Server
+- Formatos: oas3, oas2
+- Dado: `$.servers`, `$.host`
+
+### API_Server_URL
+- Formatos: oas3, oas2
+- Dado: `$.servers[*].url`, `$.host`
+
+### API_Tags
+- Formatos: oas2, oas3
+- Dado: `#Operation_Object.tags`
+
+### API_Tags_Item
+- Formatos: oas2, oas3
+- Dado: `$.tags[*]`
+
+### Link_Object
+- Formatos: oas3
+- Dado: `$.components.links[*]`, `#Response_All_Object.links[*]`
+
+### Operation_Object
+- Formatos: oas2, oas3
+- Dado: `#Path_Item[get,put,post,delete,options,head,patch,trace]`
+
+### Operation_Responses
+- Formatos: oas2, oas3
+- Dado: `#Operation_Object.responses`
+
+### Path_Item
+- Formatos: oas2, oas3
+- Dado: `$.paths[*]`
+
+### Path_Object
+- Formatos: oas2, oas3
+- Dado: `$.paths`
+
+### Request_Parameter_All
+- Formatos: oas2, oas3
+- Dado: `$..parameters[*]`
+
+### Request_Parameter_Cookie
+- Formatos: oas2, oas3
+- Dado: `$..parameters[?(@ && @.in=="cookie")]`
+
+### Request_Parameter_Header
+- Formatos: oas2, oas3
+- Dado: `$..parameters[?(@ && @.in=="header")]`
+
+### Request_Parameter_Path
+- Formatos: oas2, oas3
+- Dado: `$..parameters[?(@ && @.in=="path")]`
+
+### Request_Parameter_Query
+- Formatos: oas2, oas3
+- Dado: `$..parameters[?(@ && @.in=="query")]`
+
+### Response_All_Object
+- Formatos: oas2, oas3
+- Dado: `$.responses`, `#Operation_Responses`, `$..responses`
+
+## Reglas
+### paths-no-uppercase
+- Dado: `#Path_Object`
+- Severidad: error
+- Función: pattern
+- Opciones de función: `notMatch: /[^\\{\\}]*[A-Z][^\\{\\}]*`
+- Campo: `@key`
+- Mensaje: "The path cannot contain uppercase (except path params name. Use n dash '-')"
+
+### models-name-format
+- Dado: `$.components.schemas`
+- Severidad: error
+- Función: pattern
+- Opciones de función: `match: ^[A-Za-z0-9\\-\\_\\.]+$`
+- Campo: `@key`
+- Mensaje: "Model names can only contain alphanumeric characters and point."
+- Form
